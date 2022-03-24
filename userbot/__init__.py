@@ -1,5 +1,8 @@
 """ Userbot initialization. """
 
+from userbot import (
+    ALIVE_NAME
+)
 import logging
 import os
 import time
@@ -441,14 +444,12 @@ with bot:
         quit(1)
 
 
-#Import Userbot - Ported by BAGASKARA
-from userbot import (
-    ALIVE_NAME
-)
+# Import Userbot - Ported by BAGASKARA
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
+
 
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 5
@@ -456,9 +457,12 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [
-        custom.Button.inline("{} {} {} ".format(f"{EMOJI_HELP}", x, f"{EMOJI_HELP}"), data="ub_modul_{}".format(x))
-        for x in helpable_modules
-    ]
+        custom.Button.inline(
+            "{} {} {} ".format(
+                f"{EMOJI_HELP}",
+                x,
+                f"{EMOJI_HELP}"),
+            data="ub_modul_{}".format(x)) for x in helpable_modules]
     pairs = list(zip(modules[::number_of_cols],
                      modules[1::number_of_cols]))
     if len(modules) % number_of_cols == 1:
@@ -467,21 +471,17 @@ def paginate_help(page_number, loaded_modules, prefix):
     modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
         pairs = pairs[
-            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                custom.Button.inline(
-                    "⋘", data="{}_prev({})".format(prefix, modulo_page)
-                ),
-                custom.Button.inline(
-                    f"{EMOJI_HELP} ᴄʟᴏsᴇ​ {EMOJI_HELP}", data="{}_close({})".format(prefix, modulo_page)
-                ),
-                custom.Button.inline(
-                    "⋙", data="{}_next({})".format(prefix, modulo_page)
-                )
-            )
-        ]
+            modulo_page * number_of_rows: number_of_rows * (
+                modulo_page + 1)] + [
+            (custom.Button.inline(
+                "⋘", data="{}_prev({})".format(
+                    prefix, modulo_page)), custom.Button.inline(
+                        f"{EMOJI_HELP} ᴄʟᴏsᴇ​ {EMOJI_HELP}", data="{}_close({})".format(
+                            prefix, modulo_page)), custom.Button.inline(
+                                "⋙", data="{}_next({})".format(
+                                    prefix, modulo_page)))]
     return pairs
+
 
 # From Kyuraxp kyura-userbot
 with bot:
@@ -500,7 +500,6 @@ with bot:
         me = bot.get_me()
         uid = me.id
 
-
         @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile("open")
@@ -510,7 +509,7 @@ with bot:
             try:
                 tgbotusername = BOT_USERNAME
                 if tgbotusername is not None:
-                    results = await event.client.inline_query(tgbotusername,@Xasupportbot")
+                    results = await event.client.inline_query(tgbotusername, @ Xasupportbot")
                     await results[0].click(
                         event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
                     )
