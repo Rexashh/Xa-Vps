@@ -441,50 +441,54 @@ with bot:
         quit(1)
 
 
+#Import Userbot - Ported by BAGASKARA
+from userbot import (
+    ALIVE_NAME
+)
+
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
-
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    global lockpage
-    lockpage = page_number
     helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [
-        custom.Button.inline(
-            "{} {} {} ".format(f"{EMOJI_HELP}", x, f"{EMOJI_HELP}"),
-            data="ub_modul_{}".format(x),
-        )
+        custom.Button.inline("{} {} {} ".format(f"{EMOJI_HELP}", x, f"{EMOJI_HELP}"), data="ub_modul_{}".format(x))
         for x in helpable_modules
     ]
-    pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols]))
+    pairs = list(zip(modules[::number_of_cols],
+                     modules[1::number_of_cols]))
     if len(modules) % number_of_cols == 1:
         pairs.append((modules[-1],))
     max_num_pages = ceil(len(pairs) / number_of_rows)
     modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
         pairs = pairs[
-            modulo_page * number_of_rows: number_of_rows * (
-                modulo_page + 1)] + [
-            (custom.Button.inline(
-                "<ʙᴀᴄᴋ​", data="{}_prev({})".format(
-                    prefix, modulo_page)), custom.Button.inline(
-                        "ᴍᴇɴᴜ", data="{}_close({})".format(
-                            prefix, modulo_page)), custom.Button.inline(
-                                "ɴᴇxᴛ>>", data="{}_next({})".format(
-                                    prefix, modulo_page)), )]
+            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
+        ] + [
+            (
+                custom.Button.inline(
+                    "⋘", data="{}_prev({})".format(prefix, modulo_page)
+                ),
+                custom.Button.inline(
+                    f"{EMOJI_HELP} ᴄʟᴏsᴇ​ {EMOJI_HELP}", data="{}_close({})".format(prefix, modulo_page)
+                ),
+                custom.Button.inline(
+                    "⋙", data="{}_next({})".format(prefix, modulo_page)
+                )
+            )
+        ]
     return pairs
-
 
 # From Kyuraxp kyura-userbot
 with bot:
     try:
-        bot(JoinChannelRequest("@rexaprivateroom"))
         bot(JoinChannelRequest("@tirexgugel"))
-        bot(JoinChannelRequest("@inichannelrexa"))
+        bot(JoinChannelRequest("@rexaprivateroom"))
+        bot(JoinChannelRequest("@inichannelnyarexa"))
 
         tgbot = TelegramClient(
             "TG_BOT_TOKEN",
@@ -495,9 +499,9 @@ with bot:
         dugmeler = CMD_HELP
         me = bot.get_me()
         uid = me.id
-        tgbotusername = BOT_USERNAME
 
-        @ tgbot.on(
+
+        @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile("open")
             )
@@ -506,9 +510,7 @@ with bot:
             try:
                 tgbotusername = BOT_USERNAME
                 if tgbotusername is not None:
-                    results = await event.client.inline_query(
-                        tgbotusername, "@kyura_userbot"
-                    )
+                    results = await event.client.inline_query(tgbotusername,@Xasupportbot")
                     await results[0].click(
                         event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
                     )
@@ -518,37 +520,9 @@ with bot:
                         "`The bot doesn't work! Please set the Bot Token and Username correctly. The module has been stopped.`"
                     )
             except Exception:
-                return await event.edit("⛔ **Kamu Tidak Diizinkan Untuk Menekan Nya**!")
-
-        kyuralogo = INLINE_PIC
-        plugins = CMD_HELP
-        vr = BOT_VER
-
-        # ------------------------------ChatAction--------------->
-
-        @ tgbot.on(events.ChatAction)
-        async def handler(event):
-            if event.user_joined or event.user_added:
-                u = await event.client.get_entity(event.chat_id)
-                c = await event.client.get_entity(event.user_id)
-                await event.reply(
-                    f"** Selamat Datang Digrub **👋\n"
-                    f"[{get_display_name(u)}](tg: // user?id={u.id})\n"
-                    f"────────────────────\n"
-                    f"📮 ** Nama: ** [{get_display_name(c)}](tg: // user?id={c.id})\n"
-                    f"────────────────────\n"
-                    f"✏️ ** ID: ** {c.id}\n"
-                    f"────────────────────\n"
-                    f"🤴 **ʙᴏᴛᴏꜰ: ** {DEFAULTUSER}\n\n"
-                    f"➠ ** Ketik ** /rules supaya tahu peraturan Group ini\n"
-                    f"➠ **Atau** Kalian Bisa Klik /notes Dibawah Jika Ada\n",
-                    buttons=[
-                        [Button.url("【﻿CHANNEL】",
-                                    "https://t.me/tirexgugel")],
-                    ],
+                return await event.edit(
+                    "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
                 )
-
-        # ====================================InlineHandler===================================== #
 
 
 async def update_restart_msg(chat_id, msg_id):
