@@ -69,16 +69,16 @@ if CONFIG_CHECK:
     )
     quit(1)
 
-# DEVS
+# DEVS JANGAN DIHAPUS MEMEK!
 DEVS = (
-    1224143544,
-    1403094256,
-    1663258664,
-    1979717764,
+    1224143544,   #REXA
+    1784606556,   #GREY
+    1663258664,  #KYY
+    1979717764,  
     1705562427,
     1977874449,
     1784606556,
-    1416529201,
+    1416529201,  #TONY
 )
 
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
@@ -495,68 +495,68 @@ with bot:
         me = bot.get_me()
         uid = me.id
 
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile("open")
+    @tgbot.on(
+        events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            data=re.compile("open")
             )
         )
-        async def opeen(event):
-            try:
-                tgbotusername = BOT_USERNAME
-                if tgbotusername is not None:
-                    results = await event.client.inline_query(tgbotusername, "@REXAUSERFUCKINGBOT")
-                    await results[0].click(
-                        event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
-                    )
-                    await event.delete()
-                else:
-                    await event.edit(
-                        "`The bot doesn't work! Please set the Bot Token and Username correctly. The module has been stopped.`"
-                    )
-            except Exception:
-                return await event.edit(
-                    "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+    async def opeen(event)
+        try:
+            tgbotusername = BOT_USERNAME
+            if tgbotusername is not None:
+                results = await event.client.inline_query(tgbotusername, "@REXAUSERFUCKINGBOT")
+                await results[0].click(
+                    event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
                 )
+                await event.delete()
+            else:
+                await event.edit(
+                   "`The bot doesn't work! Please set the Bot Token and Username correctly. The module has been stopped.`"
+               )
+           except Exception:
+               return await event.edit(
+                   "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+              )
 
-     xalogo = HELP_LOGO
-     plugins = CMD_HELP
-     vr = BOT_VER
+    xalogo = HELP_LOGO
+    plugins = CMD_HELP
+    vr = BOT_VER
 
-     @tgbot.on(events.NewMessage(pattern="/start"))
-        async def handler(event):
-            if event.message.from_id != uid:
-                u = await event.client.get_entity(event.chat_id)
-                await event.reply(
-                    f"WOI Anjg [{get_display_name(u)}](tg://user?id={u.id}) NGAPAIN LU DI\n**⚡XA-UBOT⚡**\nKALO MAU TAU LEBIH DETAIL MENDING LU KE\n**𝗚𝗥𝗢𝗨𝗣 𝗦𝗨𝗣𝗣𝗢𝗥𝗧** Dibawah Ini.\n",
-                    buttons=[
-                        [
-                             Button.url(f"{EMOJI_HELP} CHANNEL {EMOJI_HELP}",
-                                        "t.me/tirexgugel"),
-                             Button.url(f"{EMOJI_HELP} GROUP SUPPORT {EMOJI_HELP}",
-                                        "t.me/rexaprivateroom"el)],
-                             [Button.url("ʀᴇxᴀ 🇮🇩",
-                                        "t.me/JustRex")],
-                    ]
-                )
+    @tgbot.on(events.NewMessage(pattern="/start"))
+    async def handler(event):
+        if event.message.from_id != uid:
+            u = await event.client.get_entity(event.chat_id)
+            await event.reply(
+                f"WOI Anjg [{get_display_name(u)}](tg://user?id={u.id}) NGAPAIN LU DI\n**⚡XA-UBOT⚡**\nKALO MAU TAU LEBIH DETAIL MENDING LU KE\n**𝗚𝗥𝗢𝗨𝗣 𝗦𝗨𝗣𝗣𝗢𝗥𝗧** Dibawah Ini.\n",
+                buttons=[
+                     [
+                         Button.url(f"{EMOJI_HELP} CHANNEL {EMOJI_HELP}",
+                                    "t.me/tirexgugel"),
+                         Button.url(f"{EMOJI_HELP} GROUP SUPPORT {EMOJI_HELP}",
+                                    "t.me/rexaprivateroom"el)],
+                         [Button.url("ʀᴇxᴀ 🇮🇩",
+                                    "t.me/JustRex")],
+                ]
+            )
 
 
-        @tgbot.on(events.NewMessage(pattern="/ping"))
-        async def handler(event):
-            if event.message.from_id != uid:
-                start = datetime.now()
-                end = datetime.now()
-                ms = (end - start).microseconds / 1000
-                await tgbot.send_message(
-                    event.chat_id,
+    @tgbot.on(events.NewMessage(pattern="/ping"))
+    async def handler(event):
+        if event.message.from_id != uid:
+            start = datetime.now()
+            end = datetime.now()
+            ms = (end - start).microseconds / 1000
+            await tgbot.send_message(
+                event.chat_id,
                     f"**DUARR!!**\n `{ms}ms`",
                 )
 
-        @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
-        async def inline_handler(event):
-            builder = event.builder
-            result = None
-            query = event.text
-            if event.query.user_id == uid and query.startswith("@REXAUSERFUCKINGBOT"):
+    @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
+    async def inline_handler(event):
+          builder = event.builder
+          result = None
+          query = event.text
+        if event.query.user_id == uid and query.startswith("@REXAUSERFUCKINGBOT"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
                     file=xalogo,
@@ -627,63 +627,63 @@ with bot:
                     ]
                 )
 
-        @tgbot.on(events.CallbackQuery(data=b"close"))
-        async def close(event):
-            buttons =[
-                [custom.Button.inline("Open Menu", data="nepo")],
-            ]
-            await event.edit("Menu Ditutup!", buttons=buttons.clear())
+      @tgbot.o(events.CallbackQuery(data=b"close"))
+      async def close(event):
+          buttons =[
+              [custom.Button.inline("Open Menu", data="nepo")],
+           ]
+          await event.edit("Menu Ditutup!", buttons=buttons.clear())
 
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"helpme_prev\((.+?)\)")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:  # pylint:disable=E0602
-                current_page_number = int(
-                    event.data_match.group(1).decode("UTF-8"))
-                buttons = paginate_help(
-                    current_page_number - 1, dugmeler, "helpme"  # pylint:disable=E0602
-                )
-                # https://t.me/TelethonChat/115200
-                await event.edit(buttons=buttons)
-            else:
-                reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+      @tgbot.on(
+           events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+               data=re.compile(rb"helpme_prev\((.+?)\)")
+           )
+       )
+      async def on_plug_in_callback_query_handler(event):
+          if event.query.user_id == uid:  # pylint:disable=E0602
+              current_page_number = int(
+                  event.data_match.group(1).decode("UTF-8"))
+              buttons = paginate_help(
+                  current_page_number - 1, dugmeler, "helpme"  # pylint:disable=E0602
+              )
+              # https://t.me/TelethonChat/115200
+              await event.edit(buttons=buttons)
+          else:
+              reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
+              await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"ub_modul_(.*)")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:  # pylint:disable=E0602
-                modul_name = event.data_match.group(1).decode("UTF-8")
+      @tgbot.on(
+          events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+              data=re.compile(rb"ub_modul_(.*)")
+          )
+      )
+      async def on_plug_in_callback_query_handler(event):
+          if event.query.user_id == uid:  # pylint:disable=E0602
+              modul_name = event.data_match.group(1).decode("UTF-8")
 
-                cmdhel = str(CMD_HELP[modul_name])
-                if len(cmdhel) > 180:
-                    help_string = (
-                        str(CMD_HELP[modul_name]).replace(
-                            '`', '')[:180] + "..."
-                        + "\n\nBaca Text Berikutnya Ketik .helpme "
-                        + modul_name
-                        + " "
-                  )
-                else:
+              cmdhel = str(CMD_HELP[modul_name])
+              if len(cmdhel) > 180:
+                  help_string = (
+                      str(CMD_HELP[modul_name]).replace(
+                          '`', '')[:180] + "..."
+                      + "\n\nBaca Text Berikutnya Ketik .helpme "
+                      + modul_name
+                      + " "
+                 )
+               else:
                     help_string = str(CMD_HELP[modul_name]).replace('`', '')
 
-                reply_pop_up_alert = (
-                    help_string
-                    if help_string is not None
-                    else "{} No document has been written for module.".format(
-                        modul_name
-                    )
-                )
-            else:
-                reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
+               reply_pop_up_alert = (
+                   help_string
+                   if help_string is not None
+                   else "{} No document has been written for module.".format(
+                       modul_name
+                   )
+               )
+           else:
+               reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
 
-            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+           await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
