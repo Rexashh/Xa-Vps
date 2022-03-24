@@ -523,365 +523,160 @@ with bot:
                     "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
                 )
 
+     xalogo = HELP_LOGO
+     plugins = CMD_HELP
+     vr = BOT_VER
 
-async def
-update_restart_msg(chat_id, msg_id):
-    DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
-    message = (
-        f"**Xa-Userbot v{BOT_VER} is back up and running!**\n\n"
-        f"**Telethon:** {version.__version__}\n"
-        f"**Python:** {python_version()}\n"
-        f"**User:** {DEFAULTUSER}"
-    )
-    await bot.edit_message(chat_id, msg_id, message)
-    return True
-
-
-try:
-    from userbot.modules.sql_helper.globals import delgvar, gvarstatus
-
-    chat_id, msg_id = gvarstatus("restartstatus").split("\n")
-    with bot:
-        try:
-            bot.loop.run_until_complete(
-                update_restart_msg(
-                    int(chat_id), int(msg_id)))
-        except BaseException:
-            pass
-    delgvar("restartstatus")
-except AttributeError:
-    pass
-
-
-if BOT_TOKEN is not None:
-    tgbot = TelegramClient(
-        "TG_BOT_TOKEN",
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    ).start(bot_token=BOT_TOKEN)
-else:
-    tgbot = None
-
-
-def paginate_help(page_number, loaded_modules, prefix):
-    number_of_rows = 6
-    number_of_cols = 2
-    global looters
-    looters = page_number
-    helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
-    helpable_modules = sorted(helpable_modules)
-    modules = [
-        custom.Button.inline(
-            "{} {} {}".format(f"{EMOJI_HELP}", x, f"{EMOJI_HELP}"),
-            data="ub_modul_{}".format(x),
-        )
-        for x in helpable_modules
-    ]
-    pairs = list(
-        zip(
-            modules[::number_of_cols],
-            modules[1::number_of_cols],
-        )
-    )
-    if len(modules) % number_of_cols == 1:
-        pairs.append((modules[-1],))
-    max_num_pages = ceil(len(pairs) / number_of_rows)
-    modulo_page = page_number % max_num_pages
-    if len(pairs) > number_of_rows:
-        pairs = pairs[
-            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                custom.Button.inline(
-                    "««", data="{}_prev({})".format(prefix, modulo_page)
-                ),
-                custom.Button.inline("Tutup", b"close"),
-                custom.Button.inline(
-                    "»»", data="{}_next({})".format(prefix, modulo_page)
-                ),
-            )
-        ]
-    return pairs
-
-
-def ibuild_keyboard(buttons):
-    keyb = []
-    for btn in buttons:
-        if btn[2] and keyb:
-            keyb[-1].append(Button.url(btn[0], btn[1]))
-        else:
-            keyb.append([Button.url(btn[0], btn[1])])
-    return keyb
-
-
-with bot:
-    try:
-        from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
-        from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
-        from userbot.utils import reply_id
-
-        dugmeler = CMD_HELP
-        user = bot.get_me()
-        uid = user.id
-        owner = user.first_name
-        logo = ALIVE_LOGO
-        roselogo = INLINE_PIC
-        tgbotusername = BOT_USERNAME
-        BTN_URL_REGEX = re.compile(
-            r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
-        )
-
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                current_page_number = int(lockpage)
-                buttons = paginate_help(
-                    current_page_number, dugmeler, "helpme")
-                text = f"**🦖 Xa-Userbot Inline Menu 🦖**\n\n⌬ **Owner** [{user.first_name}](tg://user?id={user.id})\n⌬ **Jumlah** `{len(dugmeler)}` Modules"
-                await event.edit(
-                    text,
-                    file=roselogo,
-                    buttons=buttons,
-                    link_preview=False,
+     @tgbot.on(events.NewMessage(pattern="/start"))
+        async def handler(event):
+            if event.message.from_id != uid:
+                u = await event.client.get_entity(event.chat_id)
+                await event.reply(
+                    f"WOI Anjg [{get_display_name(u)}](tg://user?id={u.id}) NGAPAIN LU DI\n**⚡XA-UBOT⚡**\nKALO MAU TAU LEBIH DETAIL MENDING LU KE\n**𝗚𝗥𝗢𝗨𝗣 𝗦𝗨𝗣𝗣𝗢𝗥𝗧** Dibawah Ini.\n",
+                    buttons=[
+                        [
+                             Button.url(f"{EMOJI_HELP} CHANNEL {EMOJI_HELP}",
+                                        "t.me/tirexgugel"),
+                             Button.url(f"{EMOJI_HELP} GROUP SUPPORT {EMOJI_HELP}",
+                                        "t.me/rexaprivateroom"el)],
+                             [Button.url("ʀᴇxᴀ 🇮🇩",
+                                        "t.me/JustRex")],
+                    ]
                 )
-            else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.NewMessage(incoming=True,
-                  func=lambda e: e.is_private))
-        async def bot_pms(event):
-            chat = await event.get_chat()
-            if check_is_black_list(chat.id):
-                return
-            if chat.id != uid:
-                msg = await event.forward_to(uid)
-                try:
-                    add_user_to_db(
-                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
-                    )
-                except Exception as e:
-                    LOGS.error(str(e))
-                    if BOTLOG:
-                        await event.client.send_message(
-                            BOTLOG_CHATID,
-                            f"**ERROR:** Saat menyimpan detail pesan di database\n`{str(e)}`",
-                        )
-            else:
-                if event.text.startswith("/"):
-                    return
-                reply_to = await reply_id(event)
-                if reply_to is None:
-                    return
-                users = get_user_id(reply_to)
-                if users is None:
-                    return
-                for usr in users:
-                    user_id = int(usr.chat_id)
-                    reply_msg = usr.reply_id
-                    user_name = usr.first_name
-                    break
-                if user_id is not None:
-                    try:
-                        if event.media:
-                            msg = await event.client.send_file(
-                                user_id,
-                                event.media,
-                                caption=event.text,
-                                reply_to=reply_msg,
-                            )
-                        else:
-                            msg = await event.client.send_message(
-                                user_id,
-                                event.text,
-                                reply_to=reply_msg,
-                                link_preview=False,
-                            )
-                    except UserIsBlockedError:
-                        return await event.reply(
-                            "❌ **Bot ini diblokir oleh pengguna.**"
-                        )
-                    except Exception as e:
-                        return await event.reply(f"**ERROR:** `{e}`")
-                    try:
-                        add_user_to_db(
-                            reply_to,
-                            user_name,
-                            user_id,
-                            reply_msg,
-                            event.id,
-                            msg.id)
-                    except Exception as e:
-                        LOGS.error(str(e))
-                        if BOTLOG:
-                            await event.client.send_message(
-                                BOTLOG_CHATID,
-                                f"**ERROR:** Saat menyimpan detail pesan di database\n`{e}`",
-                            )
 
-        @tgbot.on(events.InlineQuery)
+        @tgbot.on(events.NewMessage(pattern="/ping"))
+        async def handler(event):
+            if event.message.from_id != uid:
+                start = datetime.now()
+                end = datetime.now()
+                ms = (end - start).microseconds / 1000
+                await tgbot.send_message(
+                    event.chat_id,
+                    f"**DUARR!!**\n `{ms}ms`",
+                )
+
+        @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("@XaUserbot"):
+            if event.query.user_id == uid and query.startswith("@REXAUSERFUCKINGBOT"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
-                    file=roselogo,
+                    file=xalogo,
                     link_preview=False,
-                    text=f"**🦖 Xa-Userbot Inline Menu 🦖**\n\n⌬ **Owner** [{user.first_name}](tg://user?id={user.id})\n⌬ **Jumlah** `{len(dugmeler)}` Modules",
+                    text=f"⚡Xa-Userbot⚡\n\n✨**Owner : [ʀᴇxᴀ 🇮🇩](t.me/JustRex)**\n\n✨ **Bot Ver :** `2.0`\n✨ **Modules :** `{len(dugmeler)}`",
                     buttons=buttons,
                 )
-            elif query.startswith("repo"):
+            elif query.startswith("tb_btn"):
                 result = builder.article(
-                    title="Repository",
-                    description="Repository Xa - Userbot",
-                    url="https://t.me/tirexgugel",
-                    thumb=InputWebDocument(
-                        INLINE_PIC,
-                        0,
-                        "image/jpeg",
-                        []),
-                    text="**Xa - Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Rexa-Ex](https://t.me/JustRex)\n✣ **Support :** @rexaprivateroom\n✣ **Repository :** [Xa-Userbot](https://github.com/Rexashh/Xa-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
-                    buttons=[
-                        [
-                            custom.Button.url(
-                                "ɢʀᴏᴜᴘ",
-                                "https://t.me/tirexgugel"),
-                            custom.Button.url(
-                                "ʀᴇᴘᴏ",
-                                "https://github.com/Rexashh/Xa-Userbot"),
-                        ],
-                    ],
-                    link_preview=False,
-                )
-            elif query.startswith("Inline buttons"):
-                markdown_note = query[14:]
-                prev = 0
-                note_data = ""
-                buttons = []
-                for match in BTN_URL_REGEX.finditer(markdown_note):
-                    n_escapes = 0
-                    to_check = match.start(1) - 1
-                    while to_check > 0 and markdown_note[to_check] == "\\":
-                        n_escapes += 1
-                        to_check -= 1
-                    if n_escapes % 2 == 0:
-                        buttons.append(
-                            (match.group(2), match.group(3), bool(
-                                match.group(4))))
-                        note_data += markdown_note[prev: match.start(1)]
-                        prev = match.end(1)
-                    elif n_escapes % 2 == 1:
-                        note_data += markdown_note[prev:to_check]
-                        prev = match.start(1) - 1
-                    else:
-                        break
-                else:
-                    note_data += markdown_note[prev:]
-                message_text = note_data.strip()
-                tl_ib_buttons = ibuild_keyboard(buttons)
-                result = builder.article(
-                    title="Inline creator",
-                    text=message_text,
-                    buttons=tl_ib_buttons,
-                    link_preview=False,
-                )
+                    "Bantuan Dari ⚡Xa-Userbot⚡ ",
+                    text="Daftar Plugins",
+                    buttons=[],
+                    link_preview=True)
             else:
                 result = builder.article(
-                    title="🦖 Xa-Userbot 🦖",
-                    description="Xa - Userbot | Telethon",
-                    url="https://t.me/rexaprivateroom",
-                    thumb=InputWebDocument(
-                        INLINE_PIC,
-                        0,
-                        "image/jpeg",
-                        []),
-                    text=f"**Xa - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Group:** @NastySupportt\n➖➖➖➖➖➖➖➖➖➖",
+                    " ⚡Xa-Userbot⚡ ",
+                    text="""**⚡Xa-Userbot⚡\n\n Anda Bisa Membuat Xa Userbot Anda Sendiri Dengan Cara:** __TEKAN DIBAWAH INI!__ 👇""",
                     buttons=[
                         [
                             custom.Button.url(
-                                "ɢʀᴏᴜᴘ",
-                                "https://t.me/tirexgugel"),
-                            custom.Button.url(
-                                "ʀᴇᴘᴏ",
+                                "⚡Bagaskara-Ubot⚡",
                                 "https://github.com/Rexashh/Xa-Userbot"),
-                        ],
-                    ],
+                            custom.Button.url(
+                                "ʀᴇxᴀ 🇮🇩",
+                                "t.me/JustRex")]],
                     link_preview=False,
                 )
-            await event.answer(
-                [result], switch_pm="👥 USERBOT PORTAL", switch_pm_param="start"
-            )
+            await event.answer([result] if result else None)
+
 
         @tgbot.on(
-            events.callbackquery.CallbackQuery(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_next\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            if event.query.user_id == uid:  # pylint:disable=E0602
                 current_page_number = int(
                     event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(
                     current_page_number + 1, dugmeler, "helpme")
+                # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = (
-                    f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
-                )
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in DEVS and SUDO_USERS:
-                openlagi = custom.Button.inline(
-                    "• Re-Open Menu •", data="reopen")
-                await event.edit(
-                    "⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi
-                )
-            else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
-            events.callbackquery.CallbackQuery(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"helpme_close\((.+?)\)")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:  # @REXAUSERFUCKINGBOT
+                # https://t.me/TelethonChat/115200
+                await event.edit(
+                    file=ramlogo,
+                    link_preview=True,
+                    buttons=[
+                        [
+                            Button.url("📢 Channel Support",
+                                       "t.me/tirexgugel"),
+                            Button.url("🚨 Group support",
+                                       "t.me/rexaprivateroom")],
+                        [Button.inline("Open Menu", data="nepo")],
+                        [custom.Button.inline(
+                            "Close", b"close")],
+                    ]
+                )
+
+        @tgbot.on(events.CallbackQuery(data=b"close"))
+        async def close(event):
+            buttons =[
+                [custom.Button.inline("Open Menu", data="nepo")],
+            ]
+            await event.edit("Menu Ditutup!", buttons=buttons.clear())
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_prev\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            if event.query.user_id == uid:  # pylint:disable=E0602
                 current_page_number = int(
                     event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(
-                    current_page_number - 1, dugmeler, "helpme")
+                    current_page_number - 1, dugmeler, "helpme"  # pylint:disable=E0602
+                )
+                # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"ub_modul_(.*)")
+            )
+        )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            if event.query.user_id == uid:  # pylint:disable=E0602
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
-                if len(cmdhel) > 150:
+                if len(cmdhel) > 180:
                     help_string = (
-                        str(CMD_HELP[modul_name])
-                        .replace("`", "")
-                        .replace("**", "")[:150]
-                        + "..."
-                        + "\n\nBaca Teks Berikutnya Ketik .help "
+                        str(CMD_HELP[modul_name]).replace(
+                            '`', '')[:180] + "..."
+                        + "\n\nBaca Text Berikutnya Ketik .helpme "
                         + modul_name
                         + " "
-                    )
+                  )
                 else:
-                    help_string = (str(CMD_HELP[modul_name]).replace(
-                        "`", "").replace("**", ""))
+                    help_string = str(CMD_HELP[modul_name]).replace('`', '')
 
                 reply_pop_up_alert = (
                     help_string
@@ -891,7 +686,9 @@ with bot:
                     )
                 )
             else:
-                f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER} Nanti Kena Ghosting."
+                reply_pop_up_alert = f"🚫!WARNING!🚫 Jangan Menggunakan Milik {DEFAULTUSER}."
+
+            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
@@ -902,5 +699,6 @@ with bot:
     except BaseException:
         LOGS.info(
             "BOTLOG_CHATID Environment Variable Isn't a "
-            "Valid Entity. Please Check Your Environment variables/config.env File.")
+            "Valid Entity. Please Check Your Environment variables/config.env File."
+        )
         quit(1)
