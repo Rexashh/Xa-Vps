@@ -36,22 +36,6 @@ from telethon.utils import get_display_name
 
 redis_db = None
 
-# Global Variables
-COUNT_MSG = 0
-USERS = {}
-COUNT_PM = {}
-ENABLE_KILLME = True
-LASTMSG = {}
-CMD_HELP = {}
-ISAFK = False
-AFKREASON = None
-ZALG_LIST = {}
-CMD_LIST = {}
-CMD_HELP = {}
-SUDO_LIST = {}
-INT_PLUG = ""
-LOAD_PLUG = {}
-
 load_dotenv("config.env")
 
 StartTime = time.time()
@@ -261,8 +245,8 @@ ALIVE_LOGO = os.environ.get(
     "ALIVE_LOGO") or "https://telegra.ph/file/9b010ead0692e3bc28df6.jpg"
 
 # Default .helpme Logo
-INLINE_PIC = os.environ.get(
-    "INLINE_PIC") or "https://telegra.ph/file/0b30f41459130f3bcf1af.jpg"
+HELP_LOGO = os.environ.get(
+    "ALIVE_LOGO") or "https://telegra.ph/file/0b30f41459130f3bcf1af.jpg"
 
 # Default emoji help
 EMOJI_HELP = os.environ.get("EMOJI_HELP") or "🦖"
@@ -442,6 +426,17 @@ with bot:
             "BOTLOG_CHATID environment variable isn't a "
             "valid entity. Check your environment variables/config.env file.")
         quit(1)
+
+# Global Variables
+COUNT_MSG = 0
+USERS = {}
+COUNT_PM = {}
+ENABLE_KILLME = True
+LASTMSG = {}
+CMD_HELP = {}
+ISAFK = False
+AFKREASON = None
+ZALG_LIST = {}
 
 
 # Import Userbot - Ported by BAGASKARA
