@@ -627,7 +627,7 @@ with bot:
                    ]
                )
 
-      @tgbot.o(events.CallbackQuery(data=b"close"))
+      @tgbot.on(events.CallbackQuery(data=b"close"))
       async def close(event):
           buttons =[
               [custom.Button.inline("Open Menu", data="nepo")],
