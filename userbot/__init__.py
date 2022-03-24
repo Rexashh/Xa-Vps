@@ -1,5 +1,8 @@
 """ Userbot initialization. """
 
+from userbot import (
+    ALIVE_NAME
+)
 import logging
 import os
 import time
@@ -436,9 +439,6 @@ AFKREASON = None
 ZALG_LIST = {}
 
 # Import Userbot - Ported by BAGASKARA
-from userbot import (
-    ALIVE_NAME
-)
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
