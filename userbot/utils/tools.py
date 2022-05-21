@@ -113,7 +113,7 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         stderr.decode("utf-8", "replace").strip(),
         process.returncode,
         process.pid,
-    
+    )
 
 async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Optional[str]:
     """ take a screenshot """
