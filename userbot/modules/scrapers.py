@@ -72,7 +72,7 @@ from userbot.utils import (
     edit_delete,
     edit_or_reply,
     googleimagesdownload,
-    man_cmd,
+    Xa_cmd,
     options,
     progress,
 )
