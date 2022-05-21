@@ -8,7 +8,7 @@ import os.path
 from html_telegraph_poster import TelegraphPoster
 from PIL import Image
 from yt_dlp import YoutubeDL
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 from userbot import bot, LOGS, SUDO_USERS
 
 from telethon.tl.functions.channels import GetParticipantRequest
@@ -101,7 +101,7 @@ async def is_admin(chat_id, user_id):
     return False
 
 
-async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
+async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """run command in terminal"""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
