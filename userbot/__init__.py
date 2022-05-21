@@ -173,8 +173,8 @@ if G_BAN_LOGGER_GROUP:
 
 # Heroku Credentials for updater.
 HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
-HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", "None")
-HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", "None")
+HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", "")
+HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", "")
 
 # JustWatch Country
 WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "ID")
