@@ -28,7 +28,6 @@ import emoji
 import qrcode
 import requests
 from aiohttp import ClientSession
-from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
 from googletrans import LANGUAGES, Translator
 from gtts import gTTS
