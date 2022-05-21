@@ -172,9 +172,9 @@ if G_BAN_LOGGER_GROUP:
     G_BAN_LOGGER_GROUP = int(G_BAN_LOGGER_GROUP)
 
 # Heroku Credentials for updater.
-HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "True"))
-HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", "")
-HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", "")
+HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
+HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", "None")
+HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", "None")
 
 # JustWatch Country
 WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "ID")
@@ -186,9 +186,9 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
-    "https://github.com/Rexashh/Xa-Userbot")
+    "https://github.com/Rexashh/Xa-Vps")
 UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "Xa-Userbot")
+    "UPSTREAM_REPO_BRANCH", "Xa-userbot")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
