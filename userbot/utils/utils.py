@@ -38,7 +38,7 @@ else:
 
 async def autopilot():
     LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT GROUP LOG USERBOT UNTUK ANDA")
-    desc = "Group Log untuk Man-UserBot.\n\nHARAP JANGAN KELUAR DARI GROUP INI.\n\n⚡ Powered By ~ @tirexgugel ⚡"
+    desc = "Group Log untuk Xa-UserBot.\n\nHARAP JANGAN KELUAR DARI GROUP INI.\n\n⚡ Powered By ~ @tirexgugel ⚡"
     try:
         grup = await bot(
             CreateChannelRequest(title="LOG XA USERBOT", about=desc, megagroup=True)
