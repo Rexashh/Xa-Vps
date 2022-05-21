@@ -19,7 +19,7 @@ from userbot.utils import Xa_cmd
 GIT_TEMP_DIR = "./userbot/temp/"
 
 
-@man_cmd(pattern="gcommit(?: |$)(.*)")
+@Xa_cmd(pattern="gcommit(?: |$)(.*)")
 async def download(event):
     if event.fwd_from:
         return
