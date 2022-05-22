@@ -20,6 +20,8 @@ services:
 
       API_HASH: $API_HASH
       
+      BOT_USERNAME: $BOT_USERNAME
+      
       BOT_TOKEN: $BOT_TOKEN
 
       BOTLOG_CHATID: $BOTLOG_CHATID
