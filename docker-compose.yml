@@ -11,6 +11,8 @@ services:
     build: .
 
     environment:
+      
+      ALIVE_NAME : $ALIVE_NAME
 
       STRING_SESSION: $STRING_SESSION
       
@@ -25,7 +27,3 @@ services:
       DATABASE_URL: $DATABASE_URL 
 
       PM_AUTO_BAN: $PM_AUTO_BAN
-
-      ALIVE_LOGO: $ALIVE_LOGO
-      
-      SUDO_USERS: $SUDO_USERS
