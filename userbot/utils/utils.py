@@ -10,7 +10,6 @@ import sys
 from pathlib import Path
 from random import randint
 
-import heroku3
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
@@ -27,14 +26,6 @@ from userbot import (
     LOGS,
     bot,
 )
-
-heroku_api = "https://api.heroku.com"
-if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
-    Heroku = heroku3.from_key(HEROKU_API_KEY)
-    app = Heroku.app(HEROKU_APP_NAME)
-    heroku_var = app.config()
-else:
-    app = None
 
 async def autopilot():
     LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT GROUP LOG USERBOT UNTUK ANDA")
